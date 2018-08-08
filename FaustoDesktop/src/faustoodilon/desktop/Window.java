@@ -1,16 +1,8 @@
 package faustoodilon.desktop;
 
-import java.awt.Button;
 import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.TextField;
 import java.awt.Toolkit;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +12,8 @@ import javax.swing.WindowConstants;
 
 /**
  * Utility class to facilitate creation of simple desktop interface for fast
- * applications.
- * The main objective is to provide a framework to help creation of simple desktop applications in java. 
+ * applications. The main objective is to provide a framework to help creation
+ * of simple desktop applications in java.
  * 
  * @author Fausto Odilon - 08/2018
  * @version 0.1
@@ -87,78 +79,26 @@ public class Window {
 		frame.setLayout(new GridLayout(0, cols));
 	}
 
-	public void addLabel(String name, String caption) {
+	public void addLabel(String name, String text) {
 
-		Label L = new Label();
-		L.setText(caption);
-		if (!name.isEmpty() && fields.get(name) != null) {
-			throw new IllegalArgumentException("Duplicate component name.");
-		}
-
-		Field field = new Field(name, L);
-		fields.put(name, field);
-		frame.add(L);
+		LabelField L = new LabelField(name, text);
+		fields.put(name, L);
+		frame.add(L.getObject());
 
 	}
 
 	public void addTextField(String name, String text, int maxLength) {
-		TextField txt = new TextField();
-		txt.setName(name);
-		txt.setText(text);
-
-		// Limita digitação de texto ao maxLength.
-		txt.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (txt.getText().length() >= maxLength) {
-					e.consume();
-				}
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		// Limita colagem de texto ao maxLength.
-		txt.addTextListener(new TextListener() {
-
-			@Override
-			public void textValueChanged(TextEvent e) {
-				if (txt.getText().length() > maxLength) {
-					txt.setText(txt.getText().substring(0, maxLength));
-				}
-
-			}
-		});
-
-		Field field = new Field(name, txt);
-		fields.put(name, field);
-		frame.add(txt);
+		TextField txt = new TextField(name, text, maxLength);
+		fields.put(name, txt);
+		frame.add(txt.getObject());
 
 	}
 
 	public void addButton(String name, String caption, ActionListener action) {
-		Button b = new Button();
-		b.setLabel(caption);
+		Button btn = new Button(name, caption, action);
+		fields.put(name, btn);
+		frame.add(btn.getObject());
 
-		Field field = new Field(name, b);
-		fields.put(name, field);
-
-		b.setActionCommand(name);
-		b.addActionListener(action);
-
-		frame.add(b);
 	}
 
 	public void messageBox(String message, String title) {
