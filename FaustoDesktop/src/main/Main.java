@@ -2,14 +2,10 @@ package main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
 
-import javax.swing.text.ChangedCharSetException;
-
-import faustoodilon.desktop.*;
+import faustoodilon.desktop.ChangeListener;
+import faustoodilon.desktop.Checkbox;
+import faustoodilon.desktop.Window;
 
 /**
  * Demonstration class for usage of faustoodilon.desktop framework.
@@ -50,8 +46,8 @@ public class Main {
 		w.addLabel("", "");
 
 		w.addLabel("lblStatus", "Status:");
-		w.addTextField("txtStatus", "Ativa", 100);
-		w.addLabel("", "");
+		w.addCheckbox("chkAtiva", "Ativa", true);
+		w.addLabel("lblModStatus", "");
 
 		w.addLabel("lblGestor", "Gestor:");
 		w.addTextField("gestor", "Nolido Otsuaf", 100);
@@ -85,6 +81,15 @@ public class Main {
 			@Override
 			public void onChange() {
 				w.getField("lblControle").setText(w.getField("txtEmpresa").getText());
+			}
+		});
+
+		w.getField("chkAtiva").addChangeListener(new ChangeListener() {
+
+			@Override
+			public void onChange() {
+				boolean blnStatus = ((Checkbox) w.getField("chkAtiva")).getValue();
+				w.getField("lblModStatus").setText(blnStatus ? "Ativada" : "Desativada");
 			}
 		});
 
