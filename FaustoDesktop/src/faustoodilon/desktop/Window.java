@@ -80,25 +80,27 @@ public class Window {
 	}
 
 	public void addLabel(String name, String text) {
-
 		LabelField L = new LabelField(name, text);
 		fields.put(name, L);
 		frame.add(L.getObject());
-
 	}
 
 	public void addTextField(String name, String text, int maxLength) {
 		TextField txt = new TextField(name, text, maxLength);
 		fields.put(name, txt);
 		frame.add(txt.getObject());
-
 	}
 
 	public void addButton(String name, String caption, ActionListener action) {
 		Button btn = new Button(name, caption, action);
 		fields.put(name, btn);
 		frame.add(btn.getObject());
+	}
 
+	public void addCheckbox(String name, String text, boolean value) {
+		Checkbox chk = new Checkbox(name, text, value);
+		fields.put(name, chk);
+		frame.add(chk.getObject());
 	}
 
 	public void messageBox(String message, String title) {
