@@ -103,6 +103,11 @@ public class Window {
 		frame.add(chk.getObject());
 	}
 
+	public <T> void addCombobox(Combobox<T> combobox) {
+		fields.put(combobox.getName(), combobox);
+		frame.add(combobox.getObject());
+	}
+
 	public void messageBox(String message, String title) {
 		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
 		// TODO: Abrir opção de tipos de mensagem.
@@ -111,5 +116,10 @@ public class Window {
 
 	public Field getField(String name) {
 		return (Field) fields.get(name);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> Combobox<T> getCombobox(String name) {
+		return (Combobox<T>) fields.get(name);
 	}
 }
