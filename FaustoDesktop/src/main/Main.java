@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import faustoodilon.desktop.ChangeListener;
 import faustoodilon.desktop.Checkbox;
+import faustoodilon.desktop.Combobox;
 import faustoodilon.desktop.Window;
 
 /**
@@ -54,8 +55,24 @@ public class Main {
 		w.addLabel("", "");
 
 		w.addLabel("lblSegmento", "Segmento:");
-		w.addTextField("segmento", "Blablabla", 100);
-		w.addLabel("", "");
+
+		Combobox<Segmento> cbo = new Combobox<Segmento>("cboSegmento");
+		
+		cbo.addItem(new Segmento("Imóveis", "Mercado Imobiliário", "IMOB"));
+		cbo.addItem(new Segmento("Veículos", "Automóveis e Motocicletas", "AUTO"));
+		cbo.addItem(new Segmento("Serviços", "Serviços não financeiros", "SERV"));
+		
+		w.addCombobox(cbo);
+
+		w.addLabel("lblSegmentoSel", "");
+
+		cbo.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void onChange() {
+				w.getField("lblSegmentoSel").setText(cbo.getItem().getDescricao());
+			}
+		});
 
 		w.addLabel("", ""); // Placeholder to start buttons on 2nd col.
 		w.addButton("btnOk", "OK", new ActionListener() {
